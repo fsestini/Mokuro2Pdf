@@ -134,7 +134,7 @@ for folder in folders do
         jsons = folder[1]
         info = folder[2]
         puts "\nProcessing #{info[:Title]}..."
-        for i in 0...pages.length do
+        for i in (0...pages.length).to_a.reverse do
             imagePath = pages[i].match(/(#{Regexp.escape(folder[3])}).*?(?=\.(jpg|jpeg|jpe|jif|jfif|jfi|png|gif|webp|tiff|tif|psd|raw|arw|cr2|nrw|k25|bmp|dib|jp2|j2k|jpf|jpx|jpm|mj2)$)/i)[0]
             if jsons.include? imagePath
                 has_Json = true
@@ -157,7 +157,7 @@ for folder in folders do
                 pageBgMagick.write "tmp/page-#{i}"
                 pageBgMagickPath = "tmp/page-#{i}"
             end
-            if i == 0
+            if i == (pages.length - 1)
                 pdf = Prawn::Document.new(page_size: [pageWidth, pageHeight], margin: [0, 0, 0, 0], info: info)
             else
                 pdf.start_new_page(size: [pageWidth, pageHeight], margin: [0, 0, 0, 0])
